@@ -18,19 +18,20 @@ class GetPackDependencies(Action):
         pack_dependencies = []
 
         for pack in packs:
-            deps = self.getPackDependencies(pack)
+            deps = self._get_pack_dependencies(pack)
             if deps:
-                pack_dependencies.append({
+                dep = {
                     "pack": pack,
-                    "dependenciess": deps
-                })
+                    "dependencies": deps
+                }
+                pack_dependencies.append(dep)
 
         if not pack_dependencies:
             return (True, [])
 
         return (True, pack_dependencies)
 
-    def get_pack_dependencies(self, pack)
+    def _get_pack_dependencies(self, pack):
         packs_base_paths = get_packs_base_paths()
 
         pack_path = None
@@ -45,10 +46,7 @@ class GetPackDependencies(Action):
 
         # Pack doesn't exist, finish execution normally with empty metadata
         if not os.path.isdir(pack_path):
-            return {
-                'pack': None,
-                'git_status': None
-            }
+            return []
 
         if not metadata_file:
             error = ('Pack "%s" doesn\'t contain pack.yaml file.' % (pack))
@@ -61,7 +59,7 @@ class GetPackDependencies(Action):
             raise Exception(error)
 
         # success if no dependencies
-        if not details["dependencies"]:
+        if not 'dependencies' in details:
             return []
 
         # Read pack.yml (details) to get a list of pack dependencies
