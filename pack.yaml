@@ -4,3 +4,5 @@ description : Bitovi Custom Pack management functionality.
 version : 0.1.0
 author : Bitovi, LLC
 email : mick@bitovi.com
+dependencies:
+  - packs
