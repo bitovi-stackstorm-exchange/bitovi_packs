@@ -48,7 +48,7 @@ bitovi_packs.install:
         packs_dependencies: "{{ task('get_pack_dependencies').result.result }}"
       on-success:
         - install_pack_dependencies: "{{ _.packs_dependencies | length }}"
-        - register_pack: "{{ _.packs_dependencies | length == 0 }}"
+        - register_pack_single: "{{ _.packs_dependencies | length == 0 }}"
 
     install_pack_dependencies:
       action: "bitovi_packs.install"
@@ -60,9 +60,15 @@ bitovi_packs.install:
         force: "{{ _.force }}"
         python3: "{{ _.python3 }}"
       on-success:
-        - register_pack
+        - register_pack_join
 
-    register_pack:
+    register_pack_single:
+      action: "packs.load"
+      input:
+        register: "{{ _.register }}"
+        packs: "{{ _.prerun_result }}"
+
+    register_pack_join:
       action: "packs.load"
       join: all
       input:
