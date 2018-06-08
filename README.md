@@ -17,3 +17,10 @@ dependencies:
 
 ### get_pack_dependencies
 Returns the `dependencies` list from `pack.yml`
+
+
+## Installation
+- Use `packs.install` to install `bitovi_packs` from [GitHub](https://github.com/mickmcgrath13/bitovi_packs)
+
+## Demo
+- Use `bitovi_packs.install` to install `dependencies_test_parent` from [GitHub](https://github.com/mickmcgrath13/dependencies_test_parent)
