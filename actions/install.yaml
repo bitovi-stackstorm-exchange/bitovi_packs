@@ -1,0 +1,34 @@
+---
+  name: "install"
+  runner_type: "mistral-v2"
+  description: "Installs or upgrades a pack into local content repository, either by
+                git URL or a short name matching an index entry.
+                Will download pack, load the actions, sensors and rules from the pack.
+                Note that install requires reboot of some st2 services."
+  enabled: true
+  entry_point: "workflows/install.yaml"
+  parameters:
+    packs:
+      type: "array"
+      items:
+        type: "string"
+      required: true
+      description: "Name of the pack in Exchange or a git repo URL."
+    register:
+      type: "string"
+      default: "all"
+      description: "Possible options are all, sensors, actions, rules, aliases, runners, triggers, rule_types, policiy_types, policies, configs."
+    env:
+      type: "object"
+      description: "Optional environment variables."
+      required: false
+    force:
+      type: "boolean"
+      description: "Set to True to force install the pack and skip StackStorm version compatibility check and also delete and ignore lock file if one exists."
+      required: false
+      default: false
+    python3:
+      type: "boolean"
+      description: "Use Python 3 binary when creating a virtualenv for this pack."
+      required: false
+      default: false
