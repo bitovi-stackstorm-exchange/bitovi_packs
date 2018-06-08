@@ -48,7 +48,7 @@ bitovi_packs.install:
         packs_dependencies: "{{ task('get_pack_dependencies').result.result }}"
       on-success:
         - install_pack_dependencies: "{{ _.packs_dependencies | length }}"
-        - register_pack: "{{ not _.packs_dependencies | length }}"
+        - register_pack: "{{ _.packs_dependencies | length == 0 }}"
 
     install_pack_dependencies:
       action: "bitovi_packs.install"
