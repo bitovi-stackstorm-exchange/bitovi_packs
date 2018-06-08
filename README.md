@@ -1,4 +1,4 @@
-# bitovi_packs
+# bitovi_packs pack
 
 Bitovi Custom Pack management functionality.
 
