@@ -38,7 +38,7 @@ bitovi_packs.install:
         env: "{{ _.env }}"
         python3: "{{ _.python3 }}"
       on-success: 
-        - register_pack
+        - get_pack_dependencies
 
     get_pack_dependencies:
       action: "bitovi_packs.get_pack_dependencies"
@@ -61,9 +61,10 @@ bitovi_packs.install:
         python3: "{{ _.python3 }}"
       on-success:
         - register_pack
-        
+
     register_pack:
       action: "packs.load"
+      join: all
       input:
         register: "{{ _.register }}"
         packs: "{{ _.prerun_result }}"
