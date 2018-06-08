@@ -11,28 +11,6 @@ bitovi_packs.install:
 
   tasks:
 
-    get_pack_dependencies:
-      action: "bitovi_packs.get_pack_dependencies"
-      input:
-        packs: "{{ _.prerun_result }}"
-      publish:
-        packs_dependencies: "{{ task('get_pack_dependencies').result.result }}"
-      on-success:
-        - install_pack_dependencies: "{{ _.packs_dependencies | length }}"
-        - download_pack: "{{ not _.packs_dependencies | length }}"
-
-    install_pack_dependencies:
-      action: "bitovi_packs.install"
-      with-items: pack_dependencies in {{ _.packs_dependencies }}
-      input:
-        packs: "{{ _.pack_dependencies['dependencies'] }}"
-        register: "{{ _.register }}"
-        env: "{{ _.env }}"
-        force: "{{ _.force }}"
-        python3: "{{ _.python3 }}"
-      on-success:
-        - download_pack
-
     download_pack:
       action: "packs.download"
       input:
@@ -62,6 +40,28 @@ bitovi_packs.install:
       on-success: 
         - register_pack
 
+    get_pack_dependencies:
+      action: "bitovi_packs.get_pack_dependencies"
+      input:
+        packs: "{{ _.prerun_result }}"
+      publish:
+        packs_dependencies: "{{ task('get_pack_dependencies').result.result }}"
+      on-success:
+        - install_pack_dependencies: "{{ _.packs_dependencies | length }}"
+        - register_pack: "{{ not _.packs_dependencies | length }}"
+
+    install_pack_dependencies:
+      action: "bitovi_packs.install"
+      with-items: pack_dependencies in {{ _.packs_dependencies }}
+      input:
+        packs: "{{ _.pack_dependencies['dependencies'] }}"
+        register: "{{ _.register }}"
+        env: "{{ _.env }}"
+        force: "{{ _.force }}"
+        python3: "{{ _.python3 }}"
+      on-success:
+        - register_pack
+        
     register_pack:
       action: "packs.load"
       input:
