@@ -13,6 +13,9 @@ bitovi_packs.handle_pack_commit:
       action: "core.noop"
       publish:
         trigger_payload: "{{ _.trigger_payload }}"
+
+
+        
     # install_pack:
     #   action: "bitovi_packs.install"
     #   input:
