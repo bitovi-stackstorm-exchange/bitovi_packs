@@ -4,7 +4,7 @@
     enabled: true
 
     trigger:
-        type: "linux.file_watch.line"
+        type: "core.st2.file_written"
         parameters:
             file_path: /opt/stackstorm/bitovi-stackstorm-exchange/*/.git/refs/heads/dev
 
