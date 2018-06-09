@@ -4,9 +4,11 @@
     enabled: true
 
     trigger:
-        type: "core.st2.file_written"
+        type: "linux.file_watch.line"
         parameters:
-            file_path: /opt/stackstorm/bitovi-stackstorm-exchange/*/.git/refs/heads/dev
+            file_path: /opt/stackstorm/bitovi-stackstorm-exchange/bitovi_packs/.git/logs/refs/heads/dev
+
+
 
     action:
         ref: "bitovi_packs.handle_pack_commit"
