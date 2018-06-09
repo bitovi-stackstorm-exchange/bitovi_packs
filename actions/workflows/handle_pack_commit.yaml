@@ -7,6 +7,10 @@ bitovi_packs.handle_pack_commit:
 
   tasks:
 
+    # extract
+    # /opt/stackstorm/bitovi-stackstorm-exchange/bitovi_packs
+    # from file_path: 
+    #  /opt/stackstorm/bitovi-stackstorm-exchange/bitovi_packs/.git/logs/refs/heads/dev
     extract_path:
       action: "core.noop"
       publish:
@@ -14,7 +18,9 @@ bitovi_packs.handle_pack_commit:
       on-success:
         - install_pack
 
+
     install_pack:
       action: "bitovi_packs.install"
       input:
-        packs: "file:///{{ _.path }}"
+        packs: 
+          - "file:///{{ _.path }}"
