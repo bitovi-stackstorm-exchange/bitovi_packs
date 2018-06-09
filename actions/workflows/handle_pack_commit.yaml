@@ -10,24 +10,11 @@ bitovi_packs.handle_pack_commit:
     extract_path:
       action: "core.noop"
       publish:
-        # /opt/stackstorm/bitovi-stackstorm-exchange/bitovi_packs/.git/logs/refs/heads/dev
         path: <% $.trigger_payload['file_path'].split('/').splitAt(5)[0].join('/') %>
       on-success:
         - install_pack
 
     install_pack:
-      action: "core.noop"
-      publish:
-        trigger_payload: "{{ _.trigger_payload }}"
-        path: "{{ _.path }}"
-
-
-
-
-
-    # install_pack:
-    #   action: "bitovi_packs.install"
-    #   input:
-    #     packs: "{{ _.pack_url_root }}/{{ _.pack }}"
-    #   publish:
-    #     sensor_data: "{{ _.sensor_data }}"
+      action: "bitovi_packs.install"
+      input:
+        packs: "file:///{{ _.path }}"
