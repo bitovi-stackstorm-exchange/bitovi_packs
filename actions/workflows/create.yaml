@@ -1,76 +1,16 @@
 ---
 version: '2.0'
 
-bitovi_packs.install:
+bitovi_packs.create:
   input:
-    - packs
-    - register
-    - env
-    - force
-    - python3
+    - pack_name
+    - github_exchange_org
 
   tasks:
 
-    download_pack:
-      action: "packs.download"
+    create_pack_repo:
+      action: "github.create_pack_repo"
       input:
-        packs: "{{ _.packs }}"
-        force: "{{ _.force }}"
-        log_level: "CRITICAL"
+        pack: "{{ _.pack_name }}"
       publish:
-        packs_status: "{{ task('download_pack').result.result }}"
-      on-success: 
-        - "make_a_prerun"
-
-    make_a_prerun:
-      action: "packs.virtualenv_prerun"
-      input:
-        packs_status: "{{ _.packs_status }}"
-      publish:
-        prerun_result: "{{ task('make_a_prerun').result.result }}"
-      on-success: 
-        - install_python_dependencies
-
-    install_python_dependencies:
-      action: "packs.setup_virtualenv"
-      input:
-        packs: "{{ _.prerun_result }}"
-        env: "{{ _.env }}"
-        python3: "{{ _.python3 }}"
-      on-success: 
-        - get_pack_dependencies
-
-    get_pack_dependencies:
-      action: "bitovi_packs.get_pack_dependencies"
-      input:
-        packs: "{{ _.prerun_result }}"
-      publish:
-        packs_dependencies: "{{ task('get_pack_dependencies').result.result }}"
-      on-success:
-        - install_pack_dependencies: "{{ _.packs_dependencies | length }}"
-        - register_pack_single: "{{ _.packs_dependencies | length == 0 }}"
-
-    install_pack_dependencies:
-      action: "bitovi_packs.install"
-      with-items: pack_dependencies in {{ _.packs_dependencies }}
-      input:
-        packs: "{{ _.pack_dependencies['dependencies'] }}"
-        register: "{{ _.register }}"
-        env: "{{ _.env }}"
-        force: "{{ _.force }}"
-        python3: "{{ _.python3 }}"
-      on-success:
-        - register_pack_join
-
-    register_pack_single:
-      action: "packs.load"
-      input:
-        register: "{{ _.register }}"
-        packs: "{{ _.prerun_result }}"
-
-    register_pack_join:
-      action: "packs.load"
-      join: all
-      input:
-        register: "{{ _.register }}"
-        packs: "{{ _.prerun_result }}"
+        packs_status: "{{ task('create_pack_repo').result.result }}"
