@@ -4,8 +4,9 @@
     enabled: true
 
     trigger:
-        type: "core.st2.action.file_writen"
-
+        type: "linux.file_watch.line"
+        parameters:
+            file_path: /opt/stackstorm/bitovi-stackstorm-exchange/*/.git/refs/heads
     # criteria:
     #     trigger.payload_parameter_name1:
     #         type: "regex"
