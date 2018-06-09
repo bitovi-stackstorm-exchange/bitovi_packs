@@ -1,6 +1,6 @@
 ---
   name: "handle_pack_commit"
-  runner_type: "python-script"
+  runner_type: "mistral-v2"
   description: "Get pack dependencies specified in pack.yaml"
   enabled: true
   entry_point: "workflows/handle_pack_commit.yaml"
