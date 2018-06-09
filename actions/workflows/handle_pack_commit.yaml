@@ -11,7 +11,7 @@ bitovi_packs.handle_pack_commit:
       action: "core.noop"
       publish:
         # /opt/stackstorm/bitovi-stackstorm-exchange/bitovi_packs/.git/logs/refs/heads/dev
-        path: <% $.trigger_payload['file_path'].split('/').splitAt(3)[0].join('/') %>
+        path: <% $.trigger_payload['file_path'].split('/').splitAt(5)[0].join('/') %>
       on-success:
         - install_pack
 
@@ -20,6 +20,8 @@ bitovi_packs.handle_pack_commit:
       publish:
         trigger_payload: "{{ _.trigger_payload }}"
         path: "{{ _.path }}"
+
+
 
 
 

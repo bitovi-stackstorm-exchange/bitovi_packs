@@ -11,4 +11,4 @@
     action:
         ref: "bitovi_packs.handle_pack_commit"
         parameters:
-            trigger_payload: "{{ trigger.payload }}"
+            trigger_payload: "{{ trigger }}"
