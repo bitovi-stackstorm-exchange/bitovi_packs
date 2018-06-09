@@ -1,0 +1,15 @@
+---
+  name: "create"
+  runner_type: "mistral-v2"
+  description: "Create a new pack in the exchange org"
+  enabled: true
+  entry_point: "workflows/create.yaml"
+  parameters:
+    pack_name:
+      type: "string"
+      description: "The name of the pack to create"
+      required: true
+    github_exhange_org:
+      type: "string"
+      description: "Config Value: Full url of exchange github url"
+      default: "{{config_context.github_exhange_org}}"

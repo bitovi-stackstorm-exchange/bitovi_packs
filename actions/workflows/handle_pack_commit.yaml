@@ -1,0 +1,21 @@
+---
+version: '2.0'
+
+bitovi_packs.handle_pack_commit:
+  input:
+    - pack
+    - pack_url_root
+    - trigger_payload
+
+  tasks:
+
+    install_pack:
+      action: "core.noop"
+      publish:
+        trigger_payload: "{{ _.trigger_payload }}"
+    # install_pack:
+    #   action: "bitovi_packs.install"
+    #   input:
+    #     packs: "{{ _.pack_url_root }}/{{ _.pack }}"
+    #   publish:
+    #     sensor_data: "{{ _.sensor_data }}"

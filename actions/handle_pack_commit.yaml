@@ -1,0 +1,14 @@
+---
+  name: "handle_pack_commit"
+  runner_type: "python-script"
+  description: "Get pack dependencies specified in pack.yaml"
+  enabled: true
+  entry_point: "workflows/handle_pack_commit.yaml"
+  parameters:
+    pack:
+      type: "string"
+      required: true
+    pack_url_root:
+      type: "string"
+      required: true
+      default: "file:////opt/stackstorm/bitovi-stackstorm-exchange"
