@@ -7,10 +7,6 @@
         type: "linux.file_watch.line"
         parameters:
             file_path: /opt/stackstorm/bitovi-stackstorm-exchange/*/.git/refs/heads
-    # criteria:
-    #     trigger.payload_parameter_name1:
-    #         type: "regex"
-    #         pattern : "^value$"
 
     action:
         ref: "bitovi_packs.handle_pack_commit"
