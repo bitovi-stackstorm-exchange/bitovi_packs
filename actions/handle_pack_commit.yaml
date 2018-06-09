@@ -11,6 +11,6 @@
     pack_url_root:
       type: "string"
       required: true
-      default: "file:////opt/stackstorm/bitovi-stackstorm-exchange"
+      default: "/opt/stackstorm/bitovi-stackstorm-exchange"
     trigger_payload:
       type: "object"
