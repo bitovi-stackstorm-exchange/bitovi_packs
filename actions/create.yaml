@@ -13,3 +13,9 @@
       type: "string"
       description: "Config Value: Full url of exchange github url"
       default: "{{config_context.github_exhange_org}}"
+    homepage:
+      type: "string"
+      description: "The url of the repo homepage"
+    description:
+      type: "string"
+      description: "Pack Description"

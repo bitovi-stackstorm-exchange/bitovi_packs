@@ -5,12 +5,59 @@ bitovi_packs.create:
   input:
     - pack_name
     - github_exchange_org
+    - homepage
+    - description
+    - github_exchange_prefix
 
   tasks:
 
+    init:
+      action: "core.noop"
+      publish:
+        repo: "{{ _.github_exchange_prefix }}-{{ _.pack_name }}"
+        repo_url: "https://github.com/{{ _.github_exchange_org }}/{{ _.github_exchange_prefix }}-{{ _.pack_name }}"
+        # alias_url: "https://github.com/{{ _.github_exchange_org }}/{{ _.github_exchange_prefix }}-{{ _.pack_name }}"
+        repo_dir: "/opt/stackstorm/{{ _.github_exchange_org}}/{{ _.pack_name }}"
+      on-success:
+        - check_repo_exists
+
+
+    # Create repo if it doesnt exist
+
+    # Todo: implement aliasing?
+    # GitHub: create a repo or create an alias and move
+    # if git ls-remote "${ALIAS_URL}" > /dev/null 2>&1;
+    # then
+    #   echo "The alias already exists, skipping the creation."
+    # else
+    #   echo "Creating an alias ${REPO_ALIAS} for ${REPO_NAME}."
+    #   curl -sS --fail -u "${USERNAME}:${PASSWORD}" -X POST --header "Content-Type: application/json" \
+    #   -d '{"name": "'"${REPO_ALIAS}"'"}' \
+    #   "https://api.github.com/orgs/${EXCHANGE_ORG}/repos"
+    # fi
+
+    # # GitHub: rename the alias repo to its full name
+    # echo "Renaming the repo to ${REPO_NAME}."
+    # curl -sS --fail -u "${USERNAME}:${PASSWORD}" -X PATCH --header "Content-Type: application/json" \
+    # -d '{"name": "'"${REPO_NAME}"'"}' \
+    # "https://api.github.com/repos/${EXCHANGE_ORG}/${REPO_ALIAS}"
     create_pack_repo:
-      action: "github.create_pack_repo"
+      action: "github.create_repo"
       input:
-        pack: "{{ _.pack_name }}"
+        repo: "{{ _.repo }}"
+        user: "{{ _.github_exchange_org }}"
+        homepage: "{{ _.homepage }}"
+        description: "{{ _.description }}"
       publish:
         packs_status: "{{ task('create_pack_repo').result.result }}"
+
+    # add_template_files
+      # # add .gitignore from somewhere
+      # curl -sS --fail "https://raw.githubusercontent.com/StackStorm-Exchange/ci/master/files/.gitignore.sample" > .gitignore
+      # git add .gitignore
+      # # git commit
+      # git commit -m "Bootstrap a Bitovi StackStorm Exchange pack repository for pack ${PACK}."
+      # git push origin master
+    # set up dev/master branches
+    # notify
+

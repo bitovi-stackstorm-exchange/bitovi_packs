@@ -1,0 +1,10 @@
+---
+token:
+  description: "GitHub oAuth Token"
+  type: "string"
+  default: "{{system.github_oauth_token}}"
+  required: true
+
+exchange_org:
+  type: "string"
+  description: "The url to the github org that is hosting an exchange"
