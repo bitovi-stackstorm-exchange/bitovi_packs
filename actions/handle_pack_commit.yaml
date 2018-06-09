@@ -5,12 +5,12 @@
   enabled: true
   entry_point: "workflows/handle_pack_commit.yaml"
   parameters:
-    pack:
-      type: "string"
-      required: true
-    pack_url_root:
-      type: "string"
-      required: true
-      default: "/opt/stackstorm/bitovi-stackstorm-exchange"
+    # pack:
+    #   type: "string"
+    #   required: true
+    # pack_url_root:
+    #   type: "string"
+    #   required: true
+    #   default: "/opt/stackstorm/bitovi-stackstorm-exchange"
     trigger_payload:
       type: "object"

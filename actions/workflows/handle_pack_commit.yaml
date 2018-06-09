@@ -3,8 +3,8 @@ version: '2.0'
 
 bitovi_packs.handle_pack_commit:
   input:
-    - pack
-    - pack_url_root
+    # - pack
+    # - pack_url_root
     - trigger_payload
 
   tasks:

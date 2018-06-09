@@ -11,7 +11,4 @@
     action:
         ref: "bitovi_packs.handle_pack_commit"
         parameters:
-            # pack: "{{ trigger.payload }}"
-            pack_url_root: /opt/stackstorm/bitovi-stackstorm-exchange/bitovi_packs/.git/logs/refs/heads/dev
-            # sensor_data: "{{ trigger.payload }}"
             trigger_payload: "{{ trigger.payload }}"
