@@ -12,3 +12,5 @@
       type: "string"
       required: true
       default: "file:////opt/stackstorm/bitovi-stackstorm-exchange"
+    trigger_payload:
+      type: "object"
