@@ -19,7 +19,7 @@ bitovi_packs.create:
         # alias_url: "https://github.com/{{ _.github_exchange_org }}/{{ _.github_exchange_prefix }}-{{ _.pack_name }}"
         repo_dir: "/opt/stackstorm/{{ _.github_exchange_org}}/{{ _.pack_name }}"
       on-success:
-        - check_repo_exists
+        - create_pack_repo
 
 
     # Create repo if it doesnt exist
