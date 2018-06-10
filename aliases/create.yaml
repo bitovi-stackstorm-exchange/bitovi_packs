@@ -8,24 +8,22 @@ formats:
       - "(github pack create|create github pack|create pack|pack create) {{pack_name}}"
 ack:
   enabled: true
-  append_url: true
+  append_url: false
   format: "Creating pack repository with `{{ actionalias.ref }}`, your ID is `{{ execution.id[:2] }}..{{ execution.id[-2:] }}`"
 result:
   extra:
     slack:
-      author_name: "{{execution.result.result['owner']}}"
+      author_name: "{{execution.result.result['owner']["login"]}}"
       color: "#00ad52" # aka Slack 'good'
-      title: "{{execution.result.result['full_name']}}"
+      title: "{{execution.result.result["html_url"]}}"
       ts: "{{execution.result.result['created_at']}}"
       footer: "BitoviPacks"
   format: |
     {% if execution.status == 'succeeded' %}
-    Created a new pack repo: __*{{execution.result.result["full_name"]}}*__{~}
+    Created a new pack repo: _*{{execution.result.result["full_name"]}}*_{~}
     {% if execution.result.result["description"] %}
     {{execution.result.result["description"]}}
     {% endif %}
-
-    See it here: {{execution.result.result["html_url"]}}
 
     Full Result:
     ```
