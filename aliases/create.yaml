@@ -25,11 +25,6 @@ result:
     {{execution.result.result["description"]}}
     {% endif %}
 
-    Full Result:
-    ```
-    {{execution.result.result}}
-    ```
-
     {% else %}
     Error: {{execution.result.stdout}}{~}See {{execution.id}} for more details.
 
