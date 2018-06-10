@@ -43,5 +43,4 @@
     skip_dependencies:
       type: "boolean"
       description: "Set to True to skip pack dependency installations"
-      required: false
       default: false
