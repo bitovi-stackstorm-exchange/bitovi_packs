@@ -101,7 +101,7 @@ bitovi_packs.install:
         - register_pack_join
 
     register_pack_join:
-      action: "packs.load"
+      action: "core.noop"
       join: all
       on-success:
         - register_pack
