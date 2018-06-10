@@ -7,6 +7,8 @@ bitovi_packs.create:
     - github_exchange_org
     - homepage
     - description
+  output:
+    result: "{{ _.create_repo_result }}"
 
   tasks:
 
@@ -48,7 +50,7 @@ bitovi_packs.create:
         homepage: "{{ _.homepage }}"
         description: "{{ _.description }}"
       publish:
-        packs_status: "{{ task('create_pack_repo').result.result }}"
+        create_repo_result: "{{ task('create_pack_repo').result.result }}"
 
     # add_template_files
       # # add .gitignore from somewhere
