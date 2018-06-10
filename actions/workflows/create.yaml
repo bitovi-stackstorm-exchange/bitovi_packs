@@ -7,7 +7,6 @@ bitovi_packs.create:
     - github_exchange_org
     - homepage
     - description
-    - github_exchange_prefix
 
   tasks:
 
