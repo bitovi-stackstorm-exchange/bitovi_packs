@@ -29,7 +29,7 @@ result:
 
     Full Result:
     ```
-    {{execution.result.result | json}}
+    {{execution.result.result}}
     ```
 
     {% else %}
