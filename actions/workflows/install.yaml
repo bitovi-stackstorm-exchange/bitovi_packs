@@ -10,6 +10,7 @@ bitovi_packs.install:
     - python3
     - root_execution_id
     - dependencies_list_prefix
+    - skip_dependencies
 
   tasks:
 
@@ -72,7 +73,8 @@ bitovi_packs.install:
         env: "{{ _.env }}"
         python3: "{{ _.python3 }}"
       on-success: 
-        - get_pack_dependencies
+        - get_pack_dependencies: "{{ not _.skip_dependencies }}"
+        - register_pack_single: "{{ _.skip_dependencies }}"
 
     get_pack_dependencies:
       action: "bitovi_packs.get_pack_dependencies"

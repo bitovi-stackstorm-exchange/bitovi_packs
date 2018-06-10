@@ -40,3 +40,8 @@
       type: "string"
       description: "The prefix used for the kv store (dependencies_list_prefix + '-' + root_execution_id)"
       default: "dependencies-list"
+    skip_dependencies:
+      type: "boolean"
+      description: "Set to True to skip pack dependency installations"
+      required: false
+      default: false
