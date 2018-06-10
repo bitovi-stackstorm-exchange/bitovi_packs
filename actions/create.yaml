@@ -20,5 +20,7 @@
       type: "string"
       description: "Pack Description"
     skip_notify:
-      - init
-      - create_pack_repo
+      type: "array"
+      default:
+        - init
+        - create_pack_repo
