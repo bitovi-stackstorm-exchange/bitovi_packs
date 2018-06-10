@@ -1,0 +1,19 @@
+---
+  name: "filter_packs_not_installed"
+  runner_type: "python-script"
+  description: >
+    Bootstrap installed packs list for root_execution_id
+    If pack not in installed packs list, add it to installed list
+    Return { packs: [newly_added_to_install_list], root_execution_id: id} 
+  enabled: true
+  entry_point: "filter_packs_not_installed.py"
+  parameters:
+    packs:
+      type: "array"
+      items:
+        type: "string"
+      required: true
+      description: "Name of the pack in Exchange or a git repo URL."
+    dependencies_list_name:
+      type: "string"
+      description: "The key for the st2.kv store for this dependencies list"
