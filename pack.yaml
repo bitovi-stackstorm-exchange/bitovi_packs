@@ -5,7 +5,7 @@ version : 0.1.0
 author : Bitovi, LLC
 email : mick@bitovi.com
 dependencies:
-  - file:////opt/stackstorm/bitovi-stackstorm-exchange/stackstorm-github
+  - https://github.com/bitovi-stackstorm-exchange/stackstorm-github
   - st2
 dev_dependencies:
   - file:////opt/stackstorm/bitovi-stackstorm-exchange/stackstorm-github
