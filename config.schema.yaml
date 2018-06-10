@@ -7,7 +7,7 @@ token:
 
 github_exhange_org:
   type: "string"
-  description: "The url to the github org that is hosting an exchange"
+  description: "Name of the exchange's GitHub organization"
 
 stackstorm_environment:
   type: "string"

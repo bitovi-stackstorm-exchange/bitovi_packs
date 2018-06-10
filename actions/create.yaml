@@ -11,7 +11,7 @@
       required: true
     github_exchange_org:
       type: "string"
-      description: "Config Value: Full url of exchange github url"
+      description: "Name of the exchange's GitHub organization"
       default: "{{config_context.github_exhange_org}}"
     homepage:
       type: "string"
