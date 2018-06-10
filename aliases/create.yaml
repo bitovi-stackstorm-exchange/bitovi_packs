@@ -15,7 +15,7 @@ result:
       author_name: "{{execution.result.result.creator}}"
       color: "#00ad52" # aka Slack 'good'
       title: "{{execution.result.result.full_name}} (ID {{execution.result.result.id}})"
-      ts: "{{execution.result.result.created_at}}"
+      ts: "{{execution.result.result['created_at']}}"
       footer: "BitoviPacks"
   format: |
     {% if execution.status == 'succeeded' %}
@@ -25,6 +25,11 @@ result:
     {% endif %}
 
     See it here: {{execution.result.result.html_url}}
+
+    Full Result:
+    ```
+    {{execution.result.result}}
+    ```
 
     {% else %}
     Error: {{execution.result.stdout}}{~}See {{execution.id}} for more details.
