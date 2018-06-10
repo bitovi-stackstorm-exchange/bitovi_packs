@@ -5,6 +5,8 @@ bitovi_packs.handle_pack_commit:
   input:
     - trigger_payload
     - skip_dependencies
+  output:
+    skip_dependencies: "{{ _.skip_dependencies }}"
 
   tasks:
 
