@@ -15,21 +15,21 @@ result:
     slack:
       author_name: "{{execution.result.result['owner']}}"
       color: "#00ad52" # aka Slack 'good'
-      title: "{{execution.result.result['full_name']}} (ID {{execution.result.result['id']}})"
+      title: "{{execution.result.result['full_name']}}"
       ts: "{{execution.result.result['created_at']}}"
       footer: "BitoviPacks"
   format: |
     {% if execution.status == 'succeeded' %}
-    Created a new pack for: _{{execution.parameters.github_exchange_org}}/{{execution.parameters.pack_name}}_{~}
-    {% if execution.result.result.description %}
-    Description: {{execution.result.result["description"]}}
+    Created a new pack repo: __*{{execution.result.result["full_name"]}}*__{~}
+    {% if execution.result.result["description"] %}
+    {{execution.result.result["description"]}}
     {% endif %}
 
     See it here: {{execution.result.result["html_url"]}}
 
     Full Result:
     ```
-    {{execution.result.result}}
+    {{execution.result.result | json}}
     ```
 
     {% else %}
