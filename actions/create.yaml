@@ -9,7 +9,7 @@
       type: "string"
       description: "The name of the pack to create"
       required: true
-    github_exhange_org:
+    github_exchange_org:
       type: "string"
       description: "Config Value: Full url of exchange github url"
       default: "{{config_context.github_exhange_org}}"

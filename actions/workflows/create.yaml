@@ -13,8 +13,8 @@ bitovi_packs.create:
     init:
       action: "core.noop"
       publish:
-        repo: "{{ _.github_exchange_prefix }}-{{ _.pack_name }}"
-        repo_url: "https://github.com/{{ _.github_exchange_org }}/{{ _.github_exchange_prefix }}-{{ _.pack_name }}"
+        repo: "{{ _.pack_name }}"
+        repo_url: "https://github.com/{{ _.github_exchange_org }}/{{ _.pack_name }}"
         # alias_url: "https://github.com/{{ _.github_exchange_org }}/{{ _.github_exchange_prefix }}-{{ _.pack_name }}"
         repo_dir: "/opt/stackstorm/{{ _.github_exchange_org}}/{{ _.pack_name }}"
       on-success:
