@@ -74,7 +74,7 @@ bitovi_packs.install:
         python3: "{{ _.python3 }}"
       on-success: 
         - get_pack_dependencies: "{{ not _.skip_dependencies }}"
-        - register_pack_single: "{{ _.skip_dependencies }}"
+        - register_pack: "{{ _.skip_dependencies }}"
 
     get_pack_dependencies:
       action: "bitovi_packs.get_pack_dependencies"
@@ -84,7 +84,7 @@ bitovi_packs.install:
         packs_dependencies: "{{ task('get_pack_dependencies').result.result }}"
       on-success:
         - install_pack_dependencies: "{{ _.packs_dependencies | length }}"
-        - register_pack_single: "{{ _.packs_dependencies | length == 0 }}"
+        - register_pack: "{{ _.packs_dependencies | length == 0 }}"
 
     install_pack_dependencies:
       action: "bitovi_packs.install"
@@ -100,7 +100,13 @@ bitovi_packs.install:
       on-success:
         - register_pack_join
 
-    register_pack_single:
+    register_pack_join:
+      action: "packs.load"
+      join: all
+      on-success:
+        - register_pack
+
+    register_pack:
       action: "packs.load"
       input:
         register: "{{ _.register }}"
@@ -108,14 +114,6 @@ bitovi_packs.install:
       on-success:
         - delegate_clean_kv_store
 
-    register_pack_join:
-      action: "packs.load"
-      join: all
-      input:
-        register: "{{ _.register }}"
-        packs: "{{ _.prerun_result }}"
-      on-success:
-        - delegate_clean_kv_store
 
     delegate_clean_kv_store:
       action: "core.noop"

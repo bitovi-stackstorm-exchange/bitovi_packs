@@ -43,4 +43,4 @@
     skip_dependencies:
       type: "boolean"
       description: "Set to True to skip pack dependency installations"
-      default: false
+      default: "{{config_context.skip_dependencies_on_install}}"

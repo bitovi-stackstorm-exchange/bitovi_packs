@@ -14,3 +14,6 @@
     #   default: "/opt/stackstorm/bitovi-stackstorm-exchange"
     trigger_payload:
       type: "object"
+    skip_dependencies:
+      type: "boolean"
+      default: "{{config_context.skip_dependencies_on_install}}"

@@ -12,3 +12,7 @@ github_exhange_org:
 stackstorm_environment:
   type: "string"
   description: "The environment stackstorm is running in"
+
+skip_dependencies_on_install:
+  type: "boolean"
+  description: "Set to true to skip dependencies when installing packs via the install action"

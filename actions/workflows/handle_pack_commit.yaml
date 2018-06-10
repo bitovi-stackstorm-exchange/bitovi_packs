@@ -4,6 +4,7 @@ version: '2.0'
 bitovi_packs.handle_pack_commit:
   input:
     - trigger_payload
+    - skip_dependencies
 
   tasks:
 
@@ -22,5 +23,6 @@ bitovi_packs.handle_pack_commit:
     install_pack:
       action: "bitovi_packs.install"
       input:
+        skip_dependencies: "{{ _.skip_dependencies }}"
         packs: 
           - "file:///{{ _.path }}"

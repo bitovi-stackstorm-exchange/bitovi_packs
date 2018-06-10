@@ -2,3 +2,4 @@
 token: "{{system.github_oauth_token}}"
 github_exhange_org: "bitovi-stackstorm-exchange"
 stackstorm_environment: "dev"
+skip_dependencies_on_install: false
