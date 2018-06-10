@@ -13,9 +13,9 @@ ack:
 result:
   extra:
     slack:
-      author_name: "{{execution.result.result['owner']["login"]}}"
+      author_name: "{{execution.result.result['owner']['login']}}"
       color: "#00ad52" # aka Slack 'good'
-      title: "{{execution.result.result["html_url"]}}"
+      title: "{{execution.result.result['html_url']}}"
       ts: "{{execution.result.result['created_at']}}"
       footer: "BitoviPacks"
   format: |
