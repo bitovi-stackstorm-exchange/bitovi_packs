@@ -12,3 +12,4 @@
         ref: "bitovi_packs.handle_pack_commit"
         parameters:
             trigger_payload: "{{ trigger }}"
+            skip_dependencies: true
