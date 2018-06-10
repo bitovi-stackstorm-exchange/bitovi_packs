@@ -1,0 +1,31 @@
+---
+name: "create"
+description: "Create a new pack in github"
+action_ref: "bitovi_packs.create"
+formats:
+  - display: "create pack {{pack_name}} [description={{description}}] [homepage={{homepage}}]"
+    representation:
+      - "(github pack create|create github pack|create pack|pack create) {{pack_name}}"
+ack:
+  enabled: false
+  append_url: false
+result:
+  extra:
+    slack:
+      author_name: "{{execution.result.result.creator}}"
+      color: "#00ad52" # aka Slack 'good'
+      title: "{{execution.result.result.full_name}} (ID {{execution.result.result.id}})"
+      ts: "{{execution.result.result.created_at}}"
+      footer: "BitoviPacks"
+  format: |
+    {% if execution.status == 'succeeded' %}
+    Created a new pack for: _{{execution.parameters.github_exchange_org}}/{{execution.parameters.pack_name}}_{~}
+    {% if execution.result.result.description %}
+    Description: {{execution.result.result.description}}
+    {% endif %}
+
+    See it here: {{execution.result.result.html_url}}
+
+    {% else %}
+    Error: {{execution.result.stdout}}{~}See {{execution.id}} for more details.
+    {% endif %}
