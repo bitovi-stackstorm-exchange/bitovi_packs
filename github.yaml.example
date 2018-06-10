@@ -1,4 +1,4 @@
 ---
 token: "{{system.github_oauth_token}}"
-exchange_org: "bitovi-stackstorm-exchange"
+github_exhange_org: "bitovi-stackstorm-exchange"
 stackstorm_environment: "dev"
