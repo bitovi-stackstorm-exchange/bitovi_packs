@@ -10,11 +10,12 @@ class GetPackDependencies(Action):
     '''
     Gets pack dependencies from pack.yml files
     '''
-    def run(self, packs):
+    def run(self, packs, stackstorm_environment="dev"):
         """
         :param pack: Installed Pack Name to get info about
         :type pack: ``str``
         """
+        self.stackstorm_environment = stackstorm_environment
         pack_dependencies = []
 
         for pack in packs:
@@ -58,12 +59,22 @@ class GetPackDependencies(Action):
             error = ('Pack "%s" doesn\'t contain a valid pack.yaml file: %s' % (pack, str(e)))
             raise Exception(error)
 
-        # success if no dependencies
-        if not 'dependencies' in details:
-            return []
+        # dev mode
+        #  if dev_dependencies are specified, use them
+        #  else use dependencies
+        # else
+        #  use dependencies
+        deps = []
+        if self.stackstorm_environment == "dev":
+            if 'dev_dependencies' in details:
+                deps = details["dev_dependencies"]
+            elif 'dependencies' in details:
+                deps = details["dependencies"]
+        else:
+            if 'dependencies' in details:
+                deps = details["dependencies"]
 
-        # Read pack.yml (details) to get a list of pack dependencies
-        return details["dependencies"]
+        return deps
 
     def _parse_yaml_file(self, file_path):
         with open(file_path) as data_file:

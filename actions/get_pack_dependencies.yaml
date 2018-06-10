@@ -11,3 +11,7 @@
         type: "string"
       required: true
       description: "Name of the pack in Exchange or a git repo URL."
+    stackstorm_environment:
+      type: "string"
+      description: "The stackstorm environment"
+      default: "{{config_context.stackstorm_environment}}"

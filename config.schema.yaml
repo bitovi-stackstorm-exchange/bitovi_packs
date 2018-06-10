@@ -8,3 +8,7 @@ token:
 exchange_org:
   type: "string"
   description: "The url to the github org that is hosting an exchange"
+
+stackstorm_environment:
+  type: "string"
+  description: "The environment stackstorm is running in"
