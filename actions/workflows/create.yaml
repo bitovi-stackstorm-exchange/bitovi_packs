@@ -7,6 +7,8 @@ bitovi_packs.create:
     - github_exchange_org
     - homepage
     - description
+    - pack_email
+    - pack_author
   output:
     result: "{{ _.create_repo_result }}"
 
@@ -51,14 +53,48 @@ bitovi_packs.create:
         description: "{{ _.description }}"
       publish:
         create_repo_result: "{{ task('create_pack_repo').result.result }}"
+      on-success:
+        - create_pack_repo
 
-    # add_template_files
-      # # add .gitignore from somewhere
-      # curl -sS --fail "https://raw.githubusercontent.com/StackStorm-Exchange/ci/master/files/.gitignore.sample" > .gitignore
-      # git add .gitignore
-      # # git commit
-      # git commit -m "Bootstrap a Bitovi StackStorm Exchange pack repository for pack ${PACK}."
-      # git push origin master
+    generate_template_files:
+      action: "bitovi_packs.generate_file_templates"
+      input:
+        repo: "{{ _.repo }}"
+        user: "{{ _.github_exchange_org }}"
+        homepage: "{{ _.homepage }}"
+        description: "{{ _.description }}"
+        pack_yaml_data:
+          name: "{{ _.repo }}"
+          description: "{{ _.description }}"
+          version: "0.1.0"
+          author: "{{ _.pack_author }}"
+          email: "{{ _.pack_email }}"
+          dependencies:
+            # provide bitovi_packs ootb
+            - https://github.com/bitovi-stackstorm-exchange/bitovi_packs
+      publish:
+        template_objects: "{{ task('generate_template_files').result.result }}"
+      on-success:
+        - upload_templates
+
+    upload_template:
+      with-items: template_object in {{ _.template_objects }}
+      action: "github.create_file"
+      input:
+        filename: "{{ _.template_object['filename'] }}"
+        commit_message: "{{ _.template_object['commit_message'] }}"
+        content: "{{ _.template_object['content'] }}"
+      on-success:
+        - join_uploads
+
+    join_uploads:
+      action: "core.noop"
+      join: all
+      on-success:
+        - setup_branches
+
+
     # set up dev/master branches
-    # notify
+    setup_branches:
+      action: "core.noop"
 

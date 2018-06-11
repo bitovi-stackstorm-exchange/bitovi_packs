@@ -24,3 +24,11 @@
       default:
         - init
         - create_pack_repo
+    pack_author:
+      type: "string"
+      description: "Pack Author"
+      default: "Bitovi, LLC"
+    pack_email:
+      type: "string"
+      description: "Pack Email"
+      default: "mick@bitovi.com"
