@@ -61,7 +61,7 @@ bitovi_packs.create:
       input:
         repo: "{{ _.repo }}"
         user: "{{ _.github_exchange_org }}"
-        homepage: "{{ _.homepage }}"
+        homepage: "{% if _.homepage %}{{ _.homepage }}{% else %}{{ _.repo_url }}{% endif %}"
         description: "{{ _.description }}"
         pack_yaml_data:
           name: "{{ _.repo }}"
