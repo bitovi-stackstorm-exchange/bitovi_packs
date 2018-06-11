@@ -75,7 +75,7 @@ bitovi_packs.create:
       publish:
         template_objects: "{{ task('generate_template_files').result.result }}"
       on-success:
-        - upload_templates
+        - upload_template
 
     upload_template:
       with-items: template_object in {{ _.template_objects }}
