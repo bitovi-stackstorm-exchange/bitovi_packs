@@ -17,7 +17,7 @@ class GenerateFileTemplates(Action):
         self.github_user = self.config.get('github_user', None)
 
     '''
-    preps files from '/opt/stackstorm/bitovi_packs/actions/pack_templates'
+    preps files from '/opt/stackstorm/bitovi_packs/actions/pack_template'
     to be staged for upload to github
 
     Returns [{
@@ -30,7 +30,7 @@ class GenerateFileTemplates(Action):
     def run(self, repo, user, homepage, description, pack_yaml_data):
         self.client = Client(base_url='http://localhost')
 
-        self.templates_folder = 'pack_templates'
+        self.templates_folder = 'pack_template'
         self.templates_dir = '/opt/stackstorm/bitovi-stackstorm-exchange/bitovi_packs/actions/' + self.templates_folder
         self.temp_templates_root = "/opt/stackstorm/tmp_create_{repo}".format(repo=repo)
         self.temp_templates_dir = "{a}/{b}".format(a=self.temp_templates_root, b=self.templates_folder)

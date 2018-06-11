@@ -1,0 +1,15 @@
+---
+    name: "watch_pack_commit"
+    description: "Watch for file changes and trigger action to reinstall packs when the git commit hash changes"
+    enabled: true
+
+    trigger:
+        type: "linux.file_watch.line"
+        parameters:
+            file_path: /opt/stackstorm/bitovi-stackstorm-exchange/__pack_name__}}/.git/logs/refs/heads/dev
+
+    action:
+        ref: "bitovi_packs.handle_pack_commit"
+        parameters:
+            trigger_payload: "{{ trigger }}"
+            skip_dependencies: "{{ config_context.skip_dependencies_on_install }}"
