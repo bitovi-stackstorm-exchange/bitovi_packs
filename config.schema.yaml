@@ -16,3 +16,11 @@ stackstorm_environment:
 skip_dependencies_on_install:
   type: "boolean"
   description: "Set to true to skip dependencies when installing packs via the install action"
+
+github_user:
+  type: "string"
+  description: "The name of the github user"
+
+github_token:
+  type: "string"
+  description: "The token for the given github_user"

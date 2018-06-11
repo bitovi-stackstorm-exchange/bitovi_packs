@@ -69,34 +69,13 @@ bitovi_packs.create:
           version: "0.1.0"
           author: "{{ _.pack_author }}"
           email: "{{ _.pack_email }}"
-          dependencies:
-            # provide bitovi_packs ootb
-            - https://github.com/bitovi-stackstorm-exchange/bitovi_packs
-      publish:
-        template_objects: "{{ task('generate_template_files').result.result }}"
-      on-success:
-        - upload_template
-
-    upload_template:
-      with-items: template_object in {{ _.template_objects }}
-      action: "github.create_file"
-      input:
-        path: "{{ _.template_object['path'] }}"
-        message: "{{ _.template_object['message'] }}"
-        content: "{{ _.template_object['content'] }}"
-        repo: "{{ _.pack_name }}" 
-        user: "{{ _.github_exchange_org }}"
-      on-success:
-        - join_uploads
-
-    join_uploads:
-      action: "core.noop"
-      join: all
+          dependencies: ["https://github.com/bitovi-stackstorm-exchange/bitovi_packs"]
       on-success:
         - setup_branches
 
-
-    # set up dev/master branches
+    # TODO: set up dev/master branches
+    # dev should be default
+    # master should be locked
     setup_branches:
       action: "core.noop"
 
