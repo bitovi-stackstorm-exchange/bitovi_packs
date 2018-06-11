@@ -19,11 +19,6 @@
     description:
       type: "string"
       description: "Pack Description"
-    skip_notify:
-      type: "array"
-      default:
-        - init
-        - create_pack_repo
     pack_author:
       type: "string"
       description: "Pack Author"
@@ -32,3 +27,12 @@
       type: "string"
       description: "Pack Email"
       default: "mick@bitovi.com"
+    skip_notify:
+      type: "array"
+      default:
+        - init
+        - create_pack_repo
+        - generate_template_files
+        - upload_template
+        - join_uploads
+        - setup_branches
