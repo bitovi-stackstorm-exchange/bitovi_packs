@@ -1,0 +1,81 @@
+---
+version: '2.0'
+
+bitovi_packs.create:
+  input:
+    - pack_name
+    - github_exchange_org
+    - homepage
+    - description
+    - pack_email
+    - pack_author
+  output:
+    result: "{{ _.create_repo_result }}"
+
+  tasks:
+
+    init:
+      action: "core.noop"
+      publish:
+        repo: "{{ _.pack_name }}"
+        repo_url: "https://github.com/{{ _.github_exchange_org }}/{{ _.pack_name }}"
+        # alias_url: "https://github.com/{{ _.github_exchange_org }}/{{ _.github_exchange_prefix }}-{{ _.pack_name }}"
+        repo_dir: "/opt/stackstorm/{{ _.github_exchange_org}}/{{ _.pack_name }}"
+      on-success:
+        - create_pack_repo
+
+
+    # Create repo if it doesnt exist
+
+    # Todo: implement aliasing?
+    # GitHub: create a repo or create an alias and move
+    # if git ls-remote "${ALIAS_URL}" > /dev/null 2>&1;
+    # then
+    #   echo "The alias already exists, skipping the creation."
+    # else
+    #   echo "Creating an alias ${REPO_ALIAS} for ${REPO_NAME}."
+    #   curl -sS --fail -u "${USERNAME}:${PASSWORD}" -X POST --header "Content-Type: application/json" \
+    #   -d '{"name": "'"${REPO_ALIAS}"'"}' \
+    #   "https://api.github.com/orgs/${EXCHANGE_ORG}/repos"
+    # fi
+
+    # # GitHub: rename the alias repo to its full name
+    # echo "Renaming the repo to ${REPO_NAME}."
+    # curl -sS --fail -u "${USERNAME}:${PASSWORD}" -X PATCH --header "Content-Type: application/json" \
+    # -d '{"name": "'"${REPO_NAME}"'"}' \
+    # "https://api.github.com/repos/${EXCHANGE_ORG}/${REPO_ALIAS}"
+    create_pack_repo:
+      action: "github.create_repo"
+      input:
+        repo: "{{ _.pack_name }}"
+        user: "{{ _.github_exchange_org }}"
+        homepage: "{{ _.homepage }}"
+        description: "{{ _.description }}"
+      publish:
+        create_repo_result: "{{ task('create_pack_repo').result.result }}"
+      on-success:
+        - generate_template_files
+
+    generate_template_files:
+      action: "bitovi_packs.generate_file_templates"
+      input:
+        repo: "{{ _.pack_name }}"
+        user: "{{ _.github_exchange_org }}"
+        homepage: "{% if _.homepage %}{{ _.homepage }}{% else %}{{ _.repo_url }}{% endif %}"
+        description: "{{ _.description }}"
+        pack_yaml_data:
+          name: "{{ _.pack_name }}"
+          description: "{{ _.description }}"
+          version: "0.1.0"
+          author: "{{ _.pack_author }}"
+          email: "{{ _.pack_email }}"
+          dependencies: ["https://github.com/bitovi-stackstorm-exchange/bitovi_packs"]
+      on-success:
+        - setup_branches
+
+    # TODO: set up dev/master branches
+    # dev should be default
+    # master should be locked
+    setup_branches:
+      action: "core.noop"
+

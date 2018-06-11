@@ -8,13 +8,49 @@ bitovi_packs.install:
     - env
     - force
     - python3
+    - root_execution_id
+    - dependencies_list_prefix
+    - skip_dependencies
 
   tasks:
+
+
+    set_local_root_execution_id:
+      action: "core.noop"
+      on-success:
+        - publish_execution_id_from_params: "{{ _.root_execution_id }}"
+        - publish_execution_id_from_context: "{{ not _.root_execution_id }}"
+
+    publish_execution_id_from_params:
+      action: "core.noop"
+      publish:
+        local_root_execution_id: "{{ _.root_execution_id }}"
+      on-success:
+        - filter_packs_not_installed
+
+    publish_execution_id_from_context:
+      action: "core.noop"
+      publish:
+        local_root_execution_id: "{{ env().st2_execution_id }}"
+      on-success:
+        - filter_packs_not_installed
+
+    filter_packs_not_installed:
+      action: "bitovi_packs.filter_packs_not_installed"
+      input:
+        packs: "{{ _.packs }}"
+        dependencies_list_name: "{{ _.dependencies_list_prefix }}-{{ _.local_root_execution_id }}"
+      publish:
+        non_installed_packs: "{{ task('filter_packs_not_installed').result.result }}"
+      on-success:
+        - download_pack: "{{ _.non_installed_packs | length > 0 }}"
+      on-error:
+        - delegate_clean_kv_store
 
     download_pack:
       action: "packs.download"
       input:
-        packs: "{{ _.packs }}"
+        packs: "{{ _.non_installed_packs }}"
         force: "{{ _.force }}"
         log_level: "CRITICAL"
       publish:
@@ -38,7 +74,8 @@ bitovi_packs.install:
         env: "{{ _.env }}"
         python3: "{{ _.python3 }}"
       on-success: 
-        - get_pack_dependencies
+        - get_pack_dependencies: "{{ not _.skip_dependencies }}"
+        - register_pack: "{{ _.skip_dependencies }}"
 
     get_pack_dependencies:
       action: "bitovi_packs.get_pack_dependencies"
@@ -48,7 +85,7 @@ bitovi_packs.install:
         packs_dependencies: "{{ task('get_pack_dependencies').result.result }}"
       on-success:
         - install_pack_dependencies: "{{ _.packs_dependencies | length }}"
-        - register_pack_single: "{{ _.packs_dependencies | length == 0 }}"
+        - register_pack: "{{ _.packs_dependencies | length == 0 }}"
 
     install_pack_dependencies:
       action: "bitovi_packs.install"
@@ -59,18 +96,32 @@ bitovi_packs.install:
         env: "{{ _.env }}"
         force: "{{ _.force }}"
         python3: "{{ _.python3 }}"
+        root_execution_id: "{{ _.local_root_execution_id }}"
+        dependencies_list_prefix: "{{ _.dependencies_list_prefix }}"
       on-success:
         - register_pack_join
 
-    register_pack_single:
-      action: "packs.load"
-      input:
-        register: "{{ _.register }}"
-        packs: "{{ _.prerun_result }}"
-
     register_pack_join:
-      action: "packs.load"
+      action: "core.noop"
       join: all
+      on-success:
+        - register_pack
+
+    register_pack:
+      action: "packs.load"
       input:
         register: "{{ _.register }}"
         packs: "{{ _.prerun_result }}"
+      on-success:
+        - delegate_clean_kv_store
+
+
+    delegate_clean_kv_store:
+      action: "core.noop"
+      on-success:
+        - clean_kv_store: "{{ not _.root_execution_id }}"
+
+    clean_kv_store:
+      action: "st2.kv.delete"
+      input:
+        key: "{{ _.dependencies_list_prefix }}-{{ _.local_root_execution_id }}"

@@ -1,0 +1,28 @@
+---
+  name: "generate_file_templates"
+  runner_type: "python-script"
+  description: >
+    Outputs resolved template files
+  enabled: true
+  entry_point: "generate_file_templates.py"
+  parameters:
+    repo:
+      type: "string"
+      required: true
+      description: "The name of the pack/GitHub repo"
+    user:
+      type: "string"
+      required: true
+      description: "GitHub User or Org"
+    homepage:
+      type: "string"
+      required: true
+      description: "GitHub Homepage"
+    description:
+      type: "string"
+      required: true
+      description: "Description of the pack"
+    pack_yaml_data:
+      type: "object"
+      required: true
+      description: "Object containing pack.yaml data"

@@ -1,0 +1,38 @@
+---
+  name: "create"
+  runner_type: "mistral-v2"
+  description: "Create a new pack in the exchange org"
+  enabled: true
+  entry_point: "workflows/create.yaml"
+  parameters:
+    pack_name:
+      type: "string"
+      description: "The name of the pack to create"
+      required: true
+    github_exchange_org:
+      type: "string"
+      description: "Name of the exchange's GitHub organization"
+      default: "{{config_context.github_exhange_org}}"
+    homepage:
+      type: "string"
+      description: "The url of the repo homepage"
+    description:
+      type: "string"
+      description: "Pack Description"
+    pack_author:
+      type: "string"
+      description: "Pack Author"
+      default: "Bitovi, LLC"
+    pack_email:
+      type: "string"
+      description: "Pack Email"
+      default: "mick@bitovi.com"
+    skip_notify:
+      type: "array"
+      default:
+        - init
+        - create_pack_repo
+        - generate_template_files
+        - upload_template
+        - join_uploads
+        - setup_branches

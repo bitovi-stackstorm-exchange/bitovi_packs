@@ -1,0 +1,6 @@
+---
+  name: "foo"
+  runner_type: "python-script"
+  description: "Sample action"
+  enabled: true
+  entry_point: "foo.py"

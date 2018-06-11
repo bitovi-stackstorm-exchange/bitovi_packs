@@ -32,3 +32,15 @@
       description: "Use Python 3 binary when creating a virtualenv for this pack."
       required: false
       default: false
+    root_execution_id:
+      type: "string"
+      description: "The execution id of the root execution"
+      required: false
+    dependencies_list_prefix:
+      type: "string"
+      description: "The prefix used for the kv store (dependencies_list_prefix + '-' + root_execution_id)"
+      default: "dependencies-list"
+    skip_dependencies:
+      type: "boolean"
+      description: "Set to True to skip pack dependency installations"
+      default: "{{config_context.skip_dependencies_on_install}}"

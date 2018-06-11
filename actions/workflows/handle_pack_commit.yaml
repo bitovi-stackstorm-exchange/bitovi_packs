@@ -1,0 +1,30 @@
+---
+version: '2.0'
+
+bitovi_packs.handle_pack_commit:
+  input:
+    - trigger_payload
+    - skip_dependencies
+  output:
+    skip_dependencies: "{{ _.skip_dependencies }}"
+
+  tasks:
+
+    # extract
+    # /opt/stackstorm/bitovi-stackstorm-exchange/bitovi_packs
+    # from file_path: 
+    #  /opt/stackstorm/bitovi-stackstorm-exchange/bitovi_packs/.git/logs/refs/heads/dev
+    extract_path:
+      action: "core.noop"
+      publish:
+        path: <% $.trigger_payload['file_path'].split('/').splitAt(5)[0].join('/') %>
+      on-success:
+        - install_pack
+
+
+    install_pack:
+      action: "bitovi_packs.install"
+      input:
+        skip_dependencies: "{{ _.skip_dependencies }}"
+        packs: 
+          - "file:///{{ _.path }}"
