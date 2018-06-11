@@ -18,6 +18,10 @@
       type: "string"
       required: true
       description: "GitHub Homepage"
+    description:
+      type: "string"
+      required: true
+      description: "Description of the pack"
     pack_yaml_data:
       type: "object"
       required: true
