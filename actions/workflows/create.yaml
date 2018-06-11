@@ -81,9 +81,11 @@ bitovi_packs.create:
       with-items: template_object in {{ _.template_objects }}
       action: "github.create_file"
       input:
-        filename: "{{ _.template_object['filename'] }}"
+        path: "{{ _.template_object['filename'] }}"
         commit_message: "{{ _.template_object['commit_message'] }}"
         content: "{{ _.template_object['content'] }}"
+        repo: "{{ _.repo }}" 
+        user: "{{ _.github_exchange_org }}"
       on-success:
         - join_uploads
 
