@@ -34,20 +34,20 @@ class GenerateFileTemplates(Action):
 
 
         staged_uploads = [{
-            "filename": "/pack.yaml",
-            "commit_message": "Bootstrap a Bitovi StackStorm Exchange pack repository for pack ${PACK}."
+            "path": "/pack.yaml",
+            "message": "Bootstrap a Bitovi StackStorm Exchange pack repository for pack ${PACK}."
             "content": self.obj_to_yaml_content(pack_yaml_data)
         },{
-            "filename": "/.gitignore",
-            "commit_message": "Bootstrap process: add gitignore"
+            "path": "/.gitignore",
+            "message": "Bootstrap process: add gitignore"
             "content": self.get_file_contents(self.temp_templates_dir + "/.gitignore")
         },{
-            "filename": "/rules/watch_pack_commit.yaml",
-            "commit_message": "Bootstrap process: add /rules/watch_pack_commit.yaml (speeds up pack development)"
+            "path": "/rules/watch_pack_commit.yaml",
+            "message": "Bootstrap process: add /rules/watch_pack_commit.yaml (speeds up pack development)"
             "content": self.obj_to_yaml_content(self.get_watch_pack_commit_rule(self.temp_templates_dir, repo))
         },{
-            "filename": "/README.md",
-            "commit_message": "Bootstrap process: add readme"
+            "path": "/README.md",
+            "message": "Bootstrap process: add readme"
             "content": self.get_readme(repo, user, description)
         }]
 
