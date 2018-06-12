@@ -42,9 +42,9 @@ class GenerateFileTemplates(Action):
         # Copy template files from {templates_dir} to {temp_templates_root}
         os.system("cp -rf {a} {b}".format(a=self.templates_dir, b=self.temp_templates_root))
 
-        self._save_obj_to_yaml_file(self.temp_templates_root, 'pack.yaml', pack_yaml_data)
-        self._save_obj_to_yaml_file(self.temp_templates_root + '/rules', 'watch_pack_commit.yaml', self.get_watch_pack_commit_rule(repo))
-        self._save_file_contents(self.temp_templates_root, 'README.md', self.get_readme(repo, user, description))
+        self._save_obj_to_yaml_file(self.temp_templates_dir, 'pack.yaml', pack_yaml_data)
+        self._save_obj_to_yaml_file(self.temp_templates_dir + '/rules', 'watch_pack_commit.yaml', self.get_watch_pack_commit_rule(repo))
+        self._save_file_contents(self.temp_templates_dir, 'README.md', self.get_readme(repo, user, description))
 
         commit_message = "Bootstrap a Bitovi StackStorm Exchange pack repository for pack {repo}".format(repo=repo)
         os.chdir(self.temp_templates_root)
@@ -139,7 +139,7 @@ class GenerateFileTemplates(Action):
         """.format(repo=repo, description=description, org=org)
 
     def get_watch_pack_commit_rule(self, repo):
-        watch_pack_commit_path = self.temp_templates_root + "/rules/watch_pack_commit.yaml"
+        watch_pack_commit_path = self.temp_templates_dir + "/rules/watch_pack_commit.yaml"
         rule_watch_pack_commit = self._parse_yaml_file(watch_pack_commit_path)
         trigger_filepath = "/opt/stackstorm/bitovi-stackstorm-exchange/" + repo + "/.git/logs/refs/heads/dev"
         rule_watch_pack_commit["trigger"]["parameters"]["file_path"] = trigger_filepath
