@@ -185,4 +185,4 @@ class GenerateFileTemplates(Action):
 
     def makedirs(self, dirs):
         if not os.path.isdir(dirs):
-            os.makedirs
+            os.makedirs(dirs)
