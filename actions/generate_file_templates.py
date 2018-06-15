@@ -31,7 +31,7 @@ class GenerateFileTemplates(Action):
         self.client = Client(base_url='http://localhost')
 
         self.templates_folder = 'pack_template'
-        self.templates_dir = '/opt/stackstorm/bitovi-stackstorm-exchange/bitovi_packs/actions/' + self.templates_folder
+        self.templates_dir = '/opt/stackstorm/packs/bitovi_packs/actions/' + self.templates_folder
         self.temp_templates_root = "/opt/stackstorm/tmp_create_{repo}".format(repo=repo)
         self.temp_templates_dir = "{a}/{b}".format(a=self.temp_templates_root, b=self.templates_folder)
 
